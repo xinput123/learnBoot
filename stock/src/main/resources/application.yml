@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: stock-service
+
+# 批处理配置
+stock:
+  batch:
+    # 批处理间隔时间(毫秒) - 每隔多久触发一次批处理
+    interval-ms: 10
+    # 批处理最大大小 - 单次批处理最多处理多少个请求
+    max-batch-size: 100
+    # 批处理线程池大小
+    thread-pool-size: 1
+    # 请求队列容量
+    queue-capacity: 10000
+    # 队列溢出策略: BLOCK(阻塞等待) | DEGRADE(降级执行) | FAIL_FAST(快速失败) | DROP_OLDEST(丢弃最旧)
+    overflow-strategy: BLOCK
+    # 请求超时时间(毫秒)
+    timeout-ms: 5000
+    # 是否允许返回null值
+    allow-null: true
+    # 批量查询结果为空时，是否重试单个查询
+    retry-on-null: false
+    # 是否启用监控日志
+    enable-monitor: true
+    # 监控日志输出间隔(秒)
+    monitor-interval-seconds: 60
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.xinput.learn.stock: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
