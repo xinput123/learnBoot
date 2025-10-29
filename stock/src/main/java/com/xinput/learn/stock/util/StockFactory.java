@@ -10,8 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class StockFactory {
+
+    public static void sleep(long mills) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(mills);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Map<String, Stock> reslove(String fileName) {
         List<String> contents = ResourceFileUtils.readFileFromClasspath(fileName);

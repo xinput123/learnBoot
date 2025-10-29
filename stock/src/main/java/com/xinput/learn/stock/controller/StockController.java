@@ -32,7 +32,7 @@ public class StockController {
 
     @GetMapping("/get/{code}")
     public Stock get(@PathVariable(name = "code") String code) {
-        return StockCache.stockMap.get(code);
+        return stockService.getStock(code);
     }
 
     @GetMapping("/reason")
