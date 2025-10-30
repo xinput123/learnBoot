@@ -1,22 +1,19 @@
 package com.xinput.learn.stock.batch;
 
+import com.xinput.learn.stock.config.BatchConfig;
+import com.xinput.learn.stock.model.Stock;
+import com.xinput.learn.stock.service.StockService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
-import com.xinput.learn.stock.config.BatchConfig;
-import com.xinput.learn.stock.model.Stock;
-import com.xinput.learn.stock.service.StockService;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
- * 股票信息批量加载器
- * 继承通用批处理框架，实现股票查询的批量加载逻辑
+ * 信息批量加载器
+ * 继承通用批处理框架，实现查询的批量加载逻辑
  */
 @Slf4j
 @Component
@@ -54,9 +51,9 @@ public class StockBatchLoader extends AbstractBatchLoader<String, Stock> {
     }
 
     /**
-     * 加载股票信息 - 异步方式
+     * 加载信息 - 异步方式
      *
-     * @param code 股票代码
+     * @param code 代码
      * @return CompletableFuture<Stock>
      */
     public CompletableFuture<Stock> loadStock(String code) {
@@ -64,9 +61,9 @@ public class StockBatchLoader extends AbstractBatchLoader<String, Stock> {
     }
 
     /**
-     * 加载股票信息 - 同步方式
+     * 加载信息 - 同步方式
      *
-     * @param code 股票代码
+     * @param code 代码
      * @return Stock
      */
     public Stock loadStockSync(String code) {

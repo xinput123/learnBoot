@@ -1,5 +1,16 @@
 package com.xinput.learn.stock.controller;
 
+import com.google.common.collect.Maps;
+import com.xinput.learn.stock.batch.StockBatchLoader;
+import com.xinput.learn.stock.model.Stock;
+import com.xinput.learn.stock.service.StockService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,20 +19,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.google.common.collect.Maps;
-import com.xinput.learn.stock.batch.StockBatchLoader;
-import com.xinput.learn.stock.model.Stock;
-import com.xinput.learn.stock.service.StockService;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 批处理性能测试控制器
@@ -39,8 +36,8 @@ public class StockBatchTestController {
 
     /**
      * 测试不使用批处理的并发查询性能
-     * 
-     * @param codes 股票代码列表，逗号分隔，例如: 000001,000002,000003
+     *
+     * @param codes 代码列表，逗号分隔，例如: 000001,000002,000003
      * @return 性能测试结果
      */
     @GetMapping("/noBatch")
@@ -54,7 +51,7 @@ public class StockBatchTestController {
         try {
             List<CompletableFuture<Stock>> futures = new ArrayList<>();
 
-            // 并发查询每个股票
+            // 并发查询每个
             for (String code : codeArray) {
                 CompletableFuture<Stock> future = CompletableFuture.supplyAsync(
                         () -> stockService.getStock(code.trim()),
@@ -96,8 +93,8 @@ public class StockBatchTestController {
 
     /**
      * 测试使用批处理的并发查询性能
-     * 
-     * @param codes 股票代码列表，逗号分隔，例如: 000001,000002,000003
+     *
+     * @param codes 代码列表，逗号分隔，例如: 000001,000002,000003
      * @return 性能测试结果
      */
     @GetMapping("/withBatch")
@@ -153,8 +150,8 @@ public class StockBatchTestController {
 
     /**
      * 对比测试：同时测试批处理和非批处理的性能
-     * 
-     * @param codes 股票代码列表，逗号分隔
+     *
+     * @param codes 代码列表，逗号分隔
      * @return 对比结果
      */
     @GetMapping("/compare")
@@ -183,7 +180,6 @@ public class StockBatchTestController {
 
         result.put("performance", String.format("批处理性能提升: %.2f%%", improvement));
         result.put("timeReduced", (noBatchTime - withBatchTime) + "ms");
-
         return result;
     }
 }
